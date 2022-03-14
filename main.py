@@ -24,13 +24,16 @@ def create_processes(array, a):
         process = Process(pid,arr_time,burst,priority)
         a.append(process)
         count = count + 1
+        print(process)
         if count == 3:
             break
-    return a
 
 
 queue1 = []
 queue2 = []
 pass1 = read_file()
-print(str(create_processes(pass1, queue1)))
-print(queue1)
+create_processes(pass1, queue1)
+i = 0
+for s in queue1:
+    s = queue1.pop()
+    print(s.print())
