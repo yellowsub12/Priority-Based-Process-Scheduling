@@ -1,7 +1,9 @@
+import queue
+
 class Queues:
-    def __init__(self):
-        queue1 = []
-        queue2 = []
+    def __init__(self, a, b):
+        queue1 = a
+        queue2 = b
         flag1 = False
         flag2 = True
 
@@ -9,17 +11,23 @@ class Queues:
         self.flag1 = a
         self.flag2 = b
 
-    def push(self, a, parameter): #a is the queue number, parameter is the process to be passed to the queue
+    def put(self, a, parameter): #a is the queue number, parameter is the process to be passed to the queue
         if a == 1:
-            self.queue1.append(parameter)
+            self.queue1.put(parameter)
         else:
-            self.queue2.append(parameter)
+            self.queue2.put(parameter)
 
-    def pop(self, a, parameter): #a is the queue number, parameter is the process to be poped off the queue
+    def get(self, a, parameter): #a is the queue number, parameter is the process to be poped off the queue
         if a == 1:
-            self.queue1.pop(parameter)
+            self.queue1.get(parameter)
         else:
-            self.queue2.pop(parameter)
+            self.queue2.get(parameter)
+            
+    def print(self):
+        for s in self.queue1.queue:
+            print(s)
+        for i in self.queue2.queue:
+            print(i)
         
 
 
