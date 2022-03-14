@@ -8,9 +8,9 @@ class Process:
 
     def time_slot(self):
         if self.priority < 100:
-            slot = (140 - self.priority) * 20 
+            slot = (140 - self.priority) * 0.020 
         else:
-            slot = (140 - self.priority) * 5
+            slot = (140 - self.priority) * 0.005
         return slot            
 
 
