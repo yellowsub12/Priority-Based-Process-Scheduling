@@ -19,3 +19,7 @@ class Process:
         print("Arrival time is: " + str(self.arrival_time))
         print("burst: " + str(self.burst))
         print("Priority is: " + str(self.priority))
+
+
+    def getID(self):
+        return self.id
