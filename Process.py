@@ -28,11 +28,6 @@ class Process:
         print("burst: " + str(self.burst))
         print("Priority is: " + str(self.priority))
 
-<<<<<<< Updated upstream
-
-    def getID(self):
-        return self.id
-=======
     def getArrivalTime(self):
         return self.arrival_time
 
@@ -50,4 +45,3 @@ class Process:
 
     def setBurst(self, a):
         self.burst = a
->>>>>>> Stashed changes
