@@ -4,12 +4,9 @@ from Process import Process
 import queue
 import time
 
-<<<<<<< Updated upstream
-=======
 global clock
 clock = 0
 
->>>>>>> Stashed changes
 def read_file():
     open_file = open("input.txt", "r")
     lines = []
@@ -18,20 +15,11 @@ def read_file():
     open_file.close()
     return lines
 
-<<<<<<< Updated upstream
-
-def create_processes(array, a):
-    global nb_processes 
-    nb_processes = array[0]
-    new_array = array[1:]
-    total_time = 0
-=======
 def create_processes(array):
     global nb_processes 
     nb_processes = array[0]
     new_array = array[1:]
     return_array = []
->>>>>>> Stashed changes
     count = 0
     previous_time = 0
     temp = 0
@@ -54,11 +42,7 @@ def create_processes(array):
         count = count + 1
         if count == len(new_array):
             break
-<<<<<<< Updated upstream
-    return total_time
-=======
     return return_array
->>>>>>> Stashed changes
 
 #def updates():
 #    waiting_time = sum_of_waiting_times
@@ -74,41 +58,6 @@ def main():
     queue1 = queue.Queue()
     queue2 = queue.Queue()
     pass1 = read_file()
-<<<<<<< Updated upstream
-    total_time = create_processes(pass1, queue1)
-    print(total_time)
-    while clock < total_time:
-        if queue1.empty():
-            flag1 = False
-            flag2 = True
-        else:
-            flag1 = True
-            flag2 = False
-        if flag1 == True:
-            process_start = time.time()
-            x = queue1.get()
-            #updates()
-            queue2.put(x)
-            flag1 = False
-            flag2 = True
-            exec_time = time.time()
-            print("Process " + x.getID() + " has executed in " + str(process_start - exec_time))
-        elif flag2 == True:
-            process_start = time.time()
-            x = queue2.get()
-            #updates()
-            queue1.put(x)
-            exec_time = time.time()
-            flag1 = True
-            flag2 = False
-            exec_time = time.time()
-            print("Process " + x.getID() + " has executed in " + str(process_start - exec_time))
-        clock = clock + 1
-        end_time = time.time()
-        #if end_time >= float(total_time):
-        #    break #loop only executes once, alternative needs to be found.
-    print(end_time - start_time)
-=======
     processes = create_processes(pass1)
     count_processes = 0
     x = processes[count_processes]
@@ -162,7 +111,6 @@ def main():
 
 
     
->>>>>>> Stashed changes
 
 if __name__ == "__main__":
     main()
