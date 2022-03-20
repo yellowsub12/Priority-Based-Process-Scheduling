@@ -65,6 +65,7 @@ def main_function_2():
     global clock
     global count_processes
     clock = clock + 1000
+    expired_processes = []
     print("Clock is %d" % clock)
 
     while True:
@@ -95,10 +96,13 @@ def main_function_2():
         if flag1 == True:
             process_start_time = clock
             execution = queue1.get()
-            if 1000 < execution.getBurst():
-                execution.setBurst((execution.getBurst() - 1000))
+            if execution.time_slot() < execution.getBurst():
+                execution.setBurst((execution.getBurst() - execution.time_slot()))
+                clock = clock + execution.getBurst()
             else:
-                execution.setBurst((execution.getBurst() - 1000))
+                clock = clock + (execution.getBurst())
+                execution.setBurst(0) # process is finished
+                expired_processes.append(execution)
             execution.setBurst() #update the remaining time to complete
             execution.setNumberExecution() #update the number of times this process has executed in a row
             if execution.getNumberExecution() == 2:
@@ -108,7 +112,13 @@ def main_function_2():
             queue2.put(execution)
         else:
             execution = queue2.get()
-            #find algorithm to run it for one clock cycle according to their time slot
+            if execution.time_slot() < execution.getBurst():
+                execution.setBurst((execution.getBurst() - execution.time_slot()))
+                clock = clock + execution.getBurst()
+            else:
+                clock = clock + (execution.getBurst())
+                execution.setBurst(0) # process is finished
+                expired_processes.append(execution)
             execution.setBurst() #update the remaining time to complete 
             execution.setNumberExecution() #update the number of times this process has executed in a row
             if execution.getNumberExecution() == 2:
