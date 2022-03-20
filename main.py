@@ -12,7 +12,6 @@ def read_file():
     for line in open_file:
         lines.append(line)
     open_file.close()
-    print("Hello it's me")
     return lines
 
 def create_processes(array):
@@ -23,7 +22,6 @@ def create_processes(array):
     count = 0
     previous_time = 0
     temp = 0
-    print("Hello it's me!!")
 
     for i in new_array:
         i = new_array[count]
@@ -58,7 +56,6 @@ clock = 0
 
 def main():
     threading.Timer(interval, main).start()
-    print("Hello it's me!!!")
     main_function_2()
 
 
@@ -118,7 +115,6 @@ def main_function_2():
 
 
 if __name__ == "__main__":
-    print("Hello")
     flag1 = True     #queue1 flag
     flag2 = False #queue2 flag
     clock = 0
