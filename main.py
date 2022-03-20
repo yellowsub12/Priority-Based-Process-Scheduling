@@ -29,7 +29,6 @@ def create_processes(array):
         pid = x[0]
         arr_time = int(x[1]) / 1000
         burst = int(x[2]) / 1000
-        total_time = total_time + burst
         priority = x[3]
         process = Process(pid,arr_time,burst,priority,0)
         if arr_time < previous_time and 1 < count:
