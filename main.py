@@ -81,6 +81,7 @@ def main_function_2():
     expired_processes = []
     print("Clock is %d" % clock)
 
+
     while True:
 
         if count_processes < nb_processes:
@@ -120,7 +121,7 @@ def main_function_2():
                     print("Time " + str(clock) + ", " + str(execution.getID()) + ", Priority updated to " +  str(execution.getPriority()))
                 queue2.put(execution)
             else:
-                clock = clock + execution.time_slot()
+                clock = clock + execution.getBurst()
                 execution.setBurst(0) # process is finished
                 expired_processes.append(execution)
                 expiry_count = expiry_count +1
@@ -145,7 +146,7 @@ def main_function_2():
                     print("Time " + str(clock) + ", " + str(execution.getID()) + ", Priority updated to " +  str(execution.getPriority()))
                 queue1.put(execution)
             else:
-                clock = clock + execution.time_slot()
+                clock = clock + execution.getBurst()
                 execution.setBurst(0) # process is finished
                 expired_processes.append(execution)
                 expiry_count = expiry_count +1
@@ -165,4 +166,5 @@ if __name__ == "__main__":
     pass1 = read_file()
     processes = create_processes(pass1)
     count_processes = 0
-    main()
+    t1 = threading.Thread(target=main)
+    t1.start()
