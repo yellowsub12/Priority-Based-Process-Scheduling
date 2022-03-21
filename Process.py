@@ -5,6 +5,8 @@ class Process:
         self.burst = burst
         self.priority = priority
         self.nb_excutions = nb_executions
+        self.update_execution = 0
+        self.waiting_time = 0
 
 
     def time_slot(self):
@@ -45,3 +47,15 @@ class Process:
 
     def setBurst(self, a):
         self.burst = a
+
+    def getNbUpdate(self):
+        return self.update_execution
+
+    def setNbUpdate(self, a):
+        self.update_execution = a
+
+    def getWaiting(self):
+        return self.waiting_time
+
+    def setWaiting(self, a):
+        self.waiting_time = self.waiting_time + a
