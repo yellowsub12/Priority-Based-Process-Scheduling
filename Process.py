@@ -34,7 +34,10 @@ class Process:
         return self.arrival_time
 
     def setNumberExecution(self):
-        self.nb_excutions = self.nb_excutions + 1
+        if self.nb_excutions <= 2:
+            self.nb_excutions = self.nb_excutions + 1
+        else:
+            self.nb_execution = 0
 
     def getNumberExecution(self):
        return self.nb_excutions
