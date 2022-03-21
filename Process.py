@@ -1,10 +1,10 @@
 class Process:
-    def __init__(self, id, arrival_time,burst,priority,nb_executions):
+    def __init__(self, id, arrival_time,burst,priority):
         self.id = id
         self.arrival_time = arrival_time
         self.burst = burst
         self.priority = priority
-        self.nb_excutions = nb_executions
+        self.nb_excutions = 0
         self.update_execution = 0
         self.waiting_time = 0
 
@@ -34,10 +34,10 @@ class Process:
         return self.arrival_time
 
     def setNumberExecution(self):
-        if self.nb_excutions <= 2:
-            self.nb_excutions = self.nb_excutions + 1
-        else:
-            self.nb_execution = 0
+        self.nb_excutions = self.nb_excutions + 1
+
+    def setNumberExecution2(self):
+        self.nb_execution = 0
 
     def getNumberExecution(self):
        return self.nb_excutions

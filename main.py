@@ -31,7 +31,7 @@ def create_processes(array):
         arr_time = int(x[1])
         burst = int(x[2])
         priority = x[3]
-        process = Process(pid,arr_time,burst,priority,0)
+        process = Process(pid,arr_time,burst,priority)
         if arr_time < previous_time and 1 < count:
             temp = return_array.pop(count-1)
             return_array.insert(count - 1, process)
@@ -74,12 +74,12 @@ def main_function_2():
     global flag2
     global clock
     global count_processes
-    clock = clock + 100
+    clock = clock + 1000
     expired_processes = []
     print("Clock is %d" % clock)
 
     while True:
-        print("Hello")
+
         if count_processes < nb_processes:
             x = processes[count_processes] #initialize the new processes
             if x.getArrivalTime() <= clock : #current time of the clock:
@@ -105,14 +105,14 @@ def main_function_2():
             execution = queue1.get()
             print("Time " + str(clock) + ", " + str(execution.getID()) + ", Started, Granted " + str(execution.time_slot()))
             if execution.time_slot() < execution.getBurst():
+                print(execution.getNumberExecution())
                 clock = clock + execution.time_slot()
                 temp = (execution.getBurst() - execution.time_slot())
                 execution.setBurst(temp)
                 execution.setNumberExecution() #update the number of times this process has executed in a row
                 print("Time " + str(clock) + ", " + str(execution.getID()) + ", Paused")
-                if execution.getNumberExecution() == 2:
+                if execution.getNumberExecution() % 2 == 0:
                     execution.setPriority(updates(execution, waiting_times(execution, clock)))
-                    execution.setNumberExecution()
                     print("Time " + str(clock) + ", " + str(execution.getID()) + ", Priority updated to " +  str(execution.getPriority()))
                     print(execution.getNumberExecution())
                 queue2.put(execution)
@@ -126,16 +126,16 @@ def main_function_2():
             execution = queue2.get()
             print("Time " + str(clock) + ", " + str(execution.getID()) + ", Started, Granted " + str(execution.time_slot()))
             if execution.time_slot() < execution.getBurst():
+                print(execution.getNumberExecution())
                 clock = clock + execution.time_slot()
                 temp = (execution.getBurst() - execution.time_slot())
                 execution.setBurst(temp)
                 execution.setNumberExecution() #update the number of times this process has executed in a row
                 print("Time " + str(clock) + ", " + str(execution.getID()) + ", Paused")
-                print(execution.getNumberExecution())
-                if execution.getNumberExecution() == 2:
+                if execution.getNumberExecution() % 2 == 0:
                     execution.setPriority(updates(execution, waiting_times(execution, clock)))
-                    execution.setNumberExecution()
                     print("Time " + str(clock) + ", " + str(execution.getID()) + ", Priority updated to " +  str(execution.getPriority()))
+                    print(execution.getNumberExecution())
                 queue1.put(execution)
             else:
                 clock = clock + execution.time_slot()
