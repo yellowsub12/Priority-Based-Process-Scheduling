@@ -48,7 +48,14 @@ def create_processes(array):
 #    bonus = 10*waiting_time/(clock - arrival_time)
 #    new_priority = max(100,min(old_priority - bonus + 5139))
 #   return new_priority     this value is to be passes to the time slot function of the process so the priority updates
-
+def waiting_times(process, clock):
+    if process.getNbUpdate() == 0:
+        temp = clock - process.getArrivalTime()
+        process.setWaiting(temp)
+        process.setNbUpdate(1)
+    else:
+        process.setWaiting((process.getWaiting() + clock - process.getBurst())) #adds the aiting time: it adds the last burst time plus the current clock and removes the burst time when it last executed.
+    return process.getWaiting()
 
 interval = 1
 clock = 0 
@@ -106,8 +113,7 @@ def main_function_2():
             execution.setBurst() #update the remaining time to complete
             execution.setNumberExecution() #update the number of times this process has executed in a row
             if execution.getNumberExecution() == 2:
-                #use the update function that has yet to be implemented
-                #it would look like execution.setPriority(updates())
+                execution.setPriority(updates(execution, clock))
                 execution.setNumberExecution(0)
             queue2.put(execution)
         else:
@@ -122,8 +128,7 @@ def main_function_2():
             execution.setBurst() #update the remaining time to complete 
             execution.setNumberExecution() #update the number of times this process has executed in a row
             if execution.getNumberExecution() == 2:
-                #use the update function that has yet to be implemented
-                #it would look like execution.setPriority(updates())
+                execution.setPriority(updates(execution, clock))
                 execution.setNumberExecution(0)
             queue1.put(execution)
 
