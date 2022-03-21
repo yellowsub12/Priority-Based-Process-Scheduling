@@ -7,6 +7,7 @@ class Process:
         self.nb_excutions = 0
         self.update_execution = 0
         self.waiting_time = 0
+        self.last_execution_time = 0
 
 
     def time_slot(self):
@@ -69,3 +70,9 @@ class Process:
 
     def getPriority(self):
         return self.priority
+
+    def setLastExecution(self, a):
+        self.last_execution_time = a
+
+    def getLastExecution(self):
+        return self.last_execution_time
