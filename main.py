@@ -113,7 +113,7 @@ def main_function_2():
             execution.setBurst() #update the remaining time to complete
             execution.setNumberExecution() #update the number of times this process has executed in a row
             if execution.getNumberExecution() == 2:
-                execution.setPriority(updates(execution, clock))
+                execution.setPriority(updates(execution, waiting_times(execution, clock)))
                 execution.setNumberExecution(0)
             queue2.put(execution)
         else:
@@ -128,7 +128,7 @@ def main_function_2():
             execution.setBurst() #update the remaining time to complete 
             execution.setNumberExecution() #update the number of times this process has executed in a row
             if execution.getNumberExecution() == 2:
-                execution.setPriority(updates(execution, clock))
+                execution.setPriority(updates(execution, waiting_times(execution, clock)))
                 execution.setNumberExecution(0)
             queue1.put(execution)
 
