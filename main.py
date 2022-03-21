@@ -64,6 +64,7 @@ def waiting_times(process, clock):
 
 interval = 1
 clock = 1000 
+expiry_count = 0
 
 
 def main():
@@ -76,6 +77,8 @@ def main_function_2():
     global flag2
     global clock
     global count_processes
+    global expiry_count
+
     clock = clock + 1000
     expired_processes = []
     print("Clock is %d" % clock)
@@ -124,7 +127,11 @@ def main_function_2():
                 clock = clock + execution.time_slot()
                 execution.setBurst(0) # process is finished
                 expired_processes.append(execution)
+                expiry_count = expiry_count +1
                 print("Time " + str(clock) + ", " + str(execution.getID()) + ", Finished")
+                if expiry_count > (nb_processes - 1):
+                    print("Program Completed!")
+                    os._exit(0)
                 continue
         else:
             execution = queue2.get()
@@ -147,7 +154,11 @@ def main_function_2():
                 clock = clock + execution.time_slot()
                 execution.setBurst(0) # process is finished
                 expired_processes.append(execution)
+                expiry_count = expiry_count +1
                 print("Time " + str(clock) + ", " + str(execution.getID()) + ", Finished")
+                if expiry_count > (nb_processes - 1):
+                    print("Program Completed!")
+                    os._exit(0)
                 continue
 
         if len(expired_processes) > nb_processes - 1:
