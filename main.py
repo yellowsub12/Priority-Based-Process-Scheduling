@@ -107,6 +107,8 @@ def main_function_2():
         #execute time slot
         if flag1 == True:
             execution = queue1.get()
+            execution.start()
+            execution.join()
             print("Time " + str(clock) + ", " + str(execution.getID()) + ", Started, Granted " + str(execution.time_slot()))
             wait_time = waiting_times(execution, clock)
             if execution.time_slot() < execution.getBurst():
@@ -132,6 +134,8 @@ def main_function_2():
                 continue
         else:
             execution = queue2.get()
+            execution.start()
+            execution.join()
             print("Time " + str(clock) + ", " + str(execution.getID()) + ", Started, Granted " + str(execution.time_slot()))
             wait_time = waiting_times(execution, clock)
             if execution.time_slot() < execution.getBurst():
