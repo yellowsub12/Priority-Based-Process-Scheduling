@@ -132,9 +132,6 @@ def main_function_2():
                 continue
         else:
             execution = queue2.get()
-            t1 = threading.Thread(target = execution)
-            t1.start()
-            t1.join()
             print("Time " + str(clock) + ", " + str(execution.getID()) + ", Started, Granted " + str(execution.time_slot()))
             wait_time = waiting_times(execution, clock)
             if execution.time_slot() < execution.getBurst():
@@ -171,3 +168,4 @@ if __name__ == "__main__":
     count_processes = 0
     t1 = threading.Thread(target=main)
     t1.start()
+    t1.join()
