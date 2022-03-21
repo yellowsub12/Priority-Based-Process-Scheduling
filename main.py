@@ -17,7 +17,7 @@ def read_file():
 
 def create_processes(array):
     global nb_processes 
-    nb_processes = array[0]
+    nb_processes = int(array[0])
     new_array = array[1:]
     return_array = []
     count = 0
@@ -61,7 +61,7 @@ def waiting_times(process, clock):
     return process.getWaiting()
 
 interval = 1
-clock = 0 
+clock = 1000 
 
 
 def main():
@@ -74,34 +74,30 @@ def main_function_2():
     global flag2
     global clock
     global count_processes
-    clock = clock + 1000
+    clock = clock + 100
     expired_processes = []
     print("Clock is %d" % clock)
 
     while True:
-        #Is the active queue empty
-        if flag1 == True and queue1.empty():
-            flag1 = False
-            flag2 = True
-        elif flag2 == True and queue2.empty():
-            flag1 = True
-            flag2 = False
+        print("Hello")
+        if count_processes < nb_processes:
+            x = processes[count_processes] #initialize the new processes
+            if x.getArrivalTime() <= clock : #current time of the clock:
+                if flag1 == True:
+                    print("Time " + str(x.getArrivalTime()) + ", " + str(x.getID()) + ", Arrived")
+                    queue2.put(x)
+                    count_processes = count_processes + 1
+                else:
+                    print("Time " + str(x.getArrivalTime()) + ", " + str(x.getID()) + ", Arrived")
+                    queue1.put(x)
+                    count_processes = count_processes + 1
 
-        x = processes[count_processes] #initialize the new processes
-        if x.getArrivalTime() == clock : #current time of the clock:
-            if flag1 == True:
-                print("Time " + str(clock) + ", " + str(x.getID()) + ", Arrived")
-                queue2.put(x)
-                count_processes = count_processes + 1
-                flag2 = True
+        if flag1 == True and queue1.empty():
                 flag1 = False
-            else:
-                print("Time " + str(clock) + ", " + str(x.getID()) + ", Arrived")
-                queue1.put(x)
-                count_processes = count_processes + 1
+                flag2 = True
+        elif flag2 == True and queue2.empty():
                 flag1 = True
                 flag2 = False
-
     
     
         #execute time slot
@@ -112,18 +108,20 @@ def main_function_2():
                 clock = clock + execution.time_slot()
                 temp = (execution.getBurst() - execution.time_slot())
                 execution.setBurst(temp)
+                execution.setNumberExecution() #update the number of times this process has executed in a row
+                print("Time " + str(clock) + ", " + str(execution.getID()) + ", Paused")
+                if execution.getNumberExecution() == 2:
+                    execution.setPriority(updates(execution, waiting_times(execution, clock)))
+                    execution.setNumberExecution()
+                    print("Time " + str(clock) + ", " + str(execution.getID()) + ", Priority updated to " +  str(execution.getPriority()))
+                    print(execution.getNumberExecution())
+                queue2.put(execution)
             else:
                 clock = clock + execution.time_slot()
                 execution.setBurst(0) # process is finished
                 expired_processes.append(execution)
                 print("Time " + str(clock) + ", " + str(execution.getID()) + ", Finished")
-            execution.setNumberExecution() #update the number of times this process has executed in a row
-            print("Time " + str(clock) + ", " + str(execution.getID()) + ", Paused")
-            if execution.getNumberExecution() == 2:
-                execution.setPriority(updates(execution, waiting_times(execution, clock)))
-                execution.setNumberExecution(0)
-                print("Time " + str(clock) + ", " + str(execution.getID()) + ", Priority updated to " +  str(execution.getPriority()))
-            queue2.put(execution)
+                continue
         else:
             execution = queue2.get()
             print("Time " + str(clock) + ", " + str(execution.getID()) + ", Started, Granted " + str(execution.time_slot()))
@@ -131,19 +129,24 @@ def main_function_2():
                 clock = clock + execution.time_slot()
                 temp = (execution.getBurst() - execution.time_slot())
                 execution.setBurst(temp)
+                execution.setNumberExecution() #update the number of times this process has executed in a row
+                print("Time " + str(clock) + ", " + str(execution.getID()) + ", Paused")
+                print(execution.getNumberExecution())
+                if execution.getNumberExecution() == 2:
+                    execution.setPriority(updates(execution, waiting_times(execution, clock)))
+                    execution.setNumberExecution()
+                    print("Time " + str(clock) + ", " + str(execution.getID()) + ", Priority updated to " +  str(execution.getPriority()))
+                queue1.put(execution)
             else:
                 clock = clock + execution.time_slot()
                 execution.setBurst(0) # process is finished
                 expired_processes.append(execution)
                 print("Time " + str(clock) + ", " + str(execution.getID()) + ", Finished")
-            execution.setNumberExecution() #update the number of times this process has executed in a row
-            print("Time " + str(clock) + ", " + str(execution.getID()) + ", Paused")
-            if execution.getNumberExecution() == 2:
-                execution.setPriority(updates(execution, waiting_times(execution, clock)))
-                execution.setNumberExecution(0)
-                print("Time " + str(clock) + ", " + str(execution.getID()) + ", Priority updated to " +  str(execution.getPriority()))
-            queue1.put(execution)
+                continue
 
+        if len(expired_processes) > nb_processes - 1:
+            print("test test")
+            os.exit()
 
 if __name__ == "__main__":
     flag1 = True     #queue1 flag
