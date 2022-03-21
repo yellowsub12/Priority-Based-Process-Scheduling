@@ -10,17 +10,17 @@ class Process:
 
 
     def time_slot(self):
-        if self.priority < 100:
-            slot = (140 - self.priority) * 0.020 
+        if int(self.priority) < 100:
+            slot = (140 - int(self.priority)) * 20 
         else:
-            slot = (140 - self.priority) * 0.005
+            slot = (140 - int(self.priority)) * 5
         return slot   
 
-    def time_slot(self, a):
-        if a < 100:
-            slot = (140 - a) * 0.020 
+    def time_slot2(self, a):
+        if int(a) < 100:
+            slot = (140 - int(a)) * 20 
         else:
-            slot = (140 - a) * 0.005
+            slot = (140 - int(a)) * 5
         return slot            
 
 
@@ -35,9 +35,6 @@ class Process:
 
     def setNumberExecution(self):
         self.nb_excutions = self.nb_excutions + 1
-
-    def setNumberExecution(self, a):
-        self.nb_excutions = a
 
     def getNumberExecution(self):
        return self.nb_excutions
@@ -59,3 +56,13 @@ class Process:
 
     def setWaiting(self, a):
         self.waiting_time = self.waiting_time + a
+
+    def getID(self):
+        return self.id
+
+    def setPriority(self, a):
+        self.priority = a
+        self.time_slot2(self.priority)
+
+    def getPriority(self):
+        return self.priority
