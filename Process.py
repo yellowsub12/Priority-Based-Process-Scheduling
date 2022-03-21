@@ -1,3 +1,5 @@
+import threading
+
 class Process:
     def __init__(self, id, arrival_time,burst,priority):
         self.id = id
