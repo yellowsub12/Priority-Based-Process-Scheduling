@@ -2,7 +2,7 @@ from hashlib import new
 from multiprocessing.connection import wait
 from Process import Process
 import queue
-import time
+import sys
 import threading
 import os
 import math
@@ -60,26 +60,29 @@ def waiting_times(process, clock): #this function calculates the total waiting t
         process.setWaiting((clock - process.getLastExecution())) 
     return process.getWaiting()
 
-interval = 1
-clock = 1000 
-expiry_count = 0
 
 
 def main():
-    threading.Timer(interval, main).start()
-    main_function_2()
+    global clock
+    clockthread = threading.Timer(interval, main).start()
+    threads.append(clockthread)
+    print("Clock is %d" % clock)
+    clock = clock + 1000
+
+    t2 = threading.Thread(target=scheduler)
+    t2.start()
+    threads.append(t2)
+    t2.join()
 
 
-def main_function_2():
+def scheduler():
     global flag1 #make global variables of the program for the flags and clock
     global flag2
     global clock
     global count_processes
     global expiry_count
 
-    clock = clock + 1000
     expired_processes = []
-    print("Clock is %d" % clock)
 
 
     while True:
@@ -137,6 +140,7 @@ def main_function_2():
                 print("Time " + str(clock) + ", " + str(execution.getID()) + ", Finished")
                 if expiry_count > (nb_processes - 1): #check if all processes are done and terminate the program
                     print("Program Completed!")
+                    f.close()
                     os._exit(0)
                 continue
         #the else statement below executes the same functions as the if it is liked with
@@ -166,13 +170,18 @@ def main_function_2():
                 print("Time " + str(clock) + ", " + str(execution.getID()) + ", Finished")
                 if expiry_count > (nb_processes - 1):
                     print("Program Completed!")
+                    f.close()
                     os._exit(0)
                 continue
 
 if __name__ == "__main__":
+    f = open("output.txt", 'w')
     flag1 = True     #queue1 flag
     flag2 = False #queue2 flag
     clock = 0
+    interval = 1
+    expiry_count = 0
+    threads = []
     queue1 = queue.Queue()
     queue2 = queue.Queue()
     pass1 = read_file()
@@ -180,4 +189,5 @@ if __name__ == "__main__":
     count_processes = 0
     t1 = threading.Thread(target=main) #main thread for the program/scheduler
     t1.start()
+    threads.append(t1)
     t1.join()
