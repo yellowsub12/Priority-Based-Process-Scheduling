@@ -1,8 +1,8 @@
 from threading import Thread
 
 class Process(Thread):
-    def init(self, id, arrival_time,burst,priority):
-        Thread.init(self)
+    def __init__(self, id, arrival_time,burst,priority):
+        Thread.__init__(self)
         self.id = id
         self.arrival_time = arrival_time
         self.burst = burst
