@@ -2,7 +2,7 @@ from threading import Thread
 
 class Process(Thread):
     def __init__(self, id, arrival_time,burst,priority):
-        Thread.__init__(self)
+        Thread.__init__(self) #everytime a process object is created, its own thread is created in the object itself.
         self.id = id
         self.arrival_time = arrival_time
         self.burst = burst
@@ -13,14 +13,14 @@ class Process(Thread):
         self.last_execution_time = 0
 
 
-    def time_slot(self):
+    def time_slot(self): #update the time slot
         if int(self.priority) < 100:
             slot = (140 - int(self.priority)) * 20 
         else:
             slot = (140 - int(self.priority)) * 5
         return slot   
 
-    def time_slot2(self, a):
+    def time_slot2(self, a): #update time slot with a function pass
         if int(a) < 100:
             slot = (140 - int(a)) * 20 
         else:
@@ -34,6 +34,8 @@ class Process(Thread):
         print("burst: " + str(self.burst))
         print("Priority is: " + str(self.priority))
 
+
+    #gets and sets funciton used throughout the program
     def getArrivalTime(self):
         return self.arrival_time
 
